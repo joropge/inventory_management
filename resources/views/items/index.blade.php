@@ -27,7 +27,8 @@
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-900 w-full">
                                 
                                 <td id="nameSearch" class="py-4 px-6 border-b border-gray-300 dark:border-gray-600 text-sm dark:text-gray-300">{{ $item->name }}</td>
-                                <td class="py-4 px-6 border-b border-gray-300 dark:border-gray-600 text-sm dark:text-gray-300">{{ $item->box->label }}</td>
+                                {{-- si hay caja que se ponga el label, sino que ponga sin caja --}}
+                                <td class="py-4 px-6 border-b border-gray-300 dark:border-gray-600 text-sm dark:text-gray-300">{{ $item->box ? $item->box->label : 'Sin caja' }}</td>
                                 <td class="py-4 px-6 border-b border-gray-300 dark:border-gray-600 text-sm">
                                     {{-- ver --}}
                                     <a href="{{ route('items.show', $item->id) }}" class="text-green-500 dark:text-green-400 hover:text-green-700 dark:hover:text-green-500">View</a>

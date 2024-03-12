@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->decimal('price', 8, 2)->nullable();
             // $table->unsignedBigInteger('box_id')->nullable();
-            $table->foreignId('box_id')->constrained()->on('boxes');
+            $table->foreignId('box_id')-> nullable()->constrained()->on('boxes')->nullOnDelete();
             $table->timestamps();
         });
     }
