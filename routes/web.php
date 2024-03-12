@@ -31,7 +31,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('items', ItemController::class);
-Route::resource('loans', LoanController::class);
+Route::resource('loans', LoanController::class)->middleware('auth');
+
+
 Route::resource('boxes', BoxController::class);
 
 

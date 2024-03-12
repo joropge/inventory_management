@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Box;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
+use App\Models\Item;
+use Illuminate\Auth\Events\Validated;
 
 class BoxController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('boxes.index', [
+            'boxes' => Box::all(),
+            'items' => Item::all(),
+        ]);
         
     }
 
@@ -21,7 +27,7 @@ class BoxController extends Controller
      */
     public function create()
     {
-        //
+        return view('boxes.create');
     }
 
     /**
@@ -29,15 +35,29 @@ class BoxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'label' => 'required|max:255',
+                'location' => 'required|max:255',
+            ]);
+
+            Box::create($validated);
+
+            return redirect()->route('boxes.index')->with('success', 'Box created successfully');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Box $box)
+    public function show(Box $box): View
     {
-        //
+        $box->load('items'); // Cargar la relación 'items' para la caja específica
+        return view('boxes.show', [
+            'box' => $box, //pasa la caja a la vista
+        ]);
     }
 
     /**
@@ -45,7 +65,7 @@ class BoxController extends Controller
      */
     public function edit(Box $box)
     {
-        //
+        return view('boxes.edit',compact('box'));
     }
 
     /**
@@ -53,7 +73,15 @@ class BoxController extends Controller
      */
     public function update(Request $request, Box $box)
     {
-        //
+        $validated = $request->validate([
+            'label' => 'required|max:255',
+            'location' => 'required|max:255',
+        ]);
+
+        $box->update($validated);
+
+        return redirect('boxes')->with('success', 'Box updated successfully');
+
     }
 
     /**
@@ -61,6 +89,9 @@ class BoxController extends Controller
      */
     public function destroy(Box $box)
     {
-        //
+        $box->items()->update(['box_id' => null]); // Actualiza los items que estaban en la caja a null
+        $box->delete(); // Elimina la caja
+
+        return redirect('boxes')->with('success', 'Box deleted successfully');
     }
 }

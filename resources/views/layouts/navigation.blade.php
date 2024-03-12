@@ -23,17 +23,17 @@
                     </x-nav-link>
                 </div>
                 {{-- boxes --}}
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('boxes.index')" :active="request()->routeIs('boxes.index')">
                         {{ __('Boxes') }}
                     </x-nav-link>
-                </div> --}}
-                {{-- loans --}}
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                </div> 
+                {{-- loans  --}}
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('loans.index')" :active="request()->routeIs('loans.index')">
                         {{ __('Loans') }}
                     </x-nav-link>
-                </div> --}}
+                </div> 
             </div>
             
             <!-- Settings Dropdown -->
